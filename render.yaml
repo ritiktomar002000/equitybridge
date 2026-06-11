@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: equitybridge
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node migrations/run.js && node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DB_HOST
+        fromDatabase:
+          name: equitybridge-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: equitybridge-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: equitybridge-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: equitybridge-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: equitybridge-db
+          property: password
+      - key: DB_SSL
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+
+databases:
+  - name: equitybridge-db
+    databaseName: equitybridge
+    plan: free

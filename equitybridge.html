@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0d0d0d"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>EquityBridge — Own a Piece of Your Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0d0d0d;--cream:#f5f0e8;--gold:#c9a84c;--gold-l:#e8d08a;--rust:#b84a2a;--green:#2a7a4a;--muted:#7a7168;--border:rgba(201,168,76,.22);--card:#faf7f2;--r:8px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Mono',monospace;font-size:13px;line-height:1.7;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;backdrop-filter:blur(14px);background:rgba(245,240,232,.9);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.5px}.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:32px;list-style:none}.nav-links a{text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink)!important;color:var(--cream)!important;padding:10px 22px;border-radius:3px}.nav-cta:hover{background:var(--gold)!important;color:var(--ink)!important}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:80px}
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:80px 60px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;animation:fadeUp .7s .2s forwards}.hero-tag::before{content:'';width:28px;height:1px;background:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,5.5vw,82px);font-weight:300;line-height:1.05;letter-spacing:-1px;margin-bottom:24px;opacity:0;animation:fadeUp .7s .35s forwards}h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:13px;color:var(--muted);max-width:420px;line-height:1.9;margin-bottom:40px;opacity:0;animation:fadeUp .7s .5s forwards}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .65s forwards}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:3px;border:none;transition:all .2s;text-decoration:none}
+.btn-gold{background:var(--gold);color:var(--ink)}.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px)}
+.btn-ink{background:var(--ink);color:var(--cream)}.btn-ink:hover{background:#2a2a2a;transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1px solid var(--ink);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--cream)}
+.hero-stats{display:flex;gap:36px;margin-top:56px;opacity:0;animation:fadeUp .7s .8s forwards}
+.stat-v{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600}.stat-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.hero-r{display:flex;align-items:center;justify-content:center;padding:60px;opacity:0;animation:fadeIn 1s .5s forwards}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:transform .2s,box-shadow .2s}.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(13,13,13,.1)}
+.feat-icon{width:44px;height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.feat-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:8px}.feat-desc{font-size:11px;color:var(--muted);line-height:1.8}
+section{position:relative;z-index:1}.sec{padding:100px 60px}
+.sec-tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:14px}.sec-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.1;margin-bottom:14px}
+.sec-sub{font-size:13px;color:var(--muted);max-width:520px;line-height:1.9;margin-bottom:56px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.dark{background:var(--ink);color:var(--cream)}.dark .sec-tag{color:var(--gold)}.dark .sec-tag::before{background:var(--gold)}.dark h2{color:var(--cream)}.dark .sec-sub{color:rgba(245,240,232,.5)}
+.dark .feat-card{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.07)}.dark .feat-card:hover{background:rgba(201,168,76,.07)}.dark .feat-title{color:var(--cream)}.dark .feat-desc{color:rgba(245,240,232,.5)}
+.listing-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer}.listing-card:hover{transform:translateY(-5px);box-shadow:0 16px 50px rgba(13,13,13,.12)}
+.listing-thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}.listing-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,13,.25),transparent)}
+.listing-body{padding:20px}.listing-cat{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.listing-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-bottom:2px}.listing-loc{font-size:10px;color:var(--muted);margin-bottom:14px}
+.listing-row{display:flex;justify-content:space-between;margin-bottom:12px}.lv{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600}.ll{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.progress{height:4px;background:rgba(201,168,76,.15);border-radius:2px;overflow:hidden;margin-bottom:6px}.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:2px}
+.listing-footer{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.badge-green{background:rgba(42,122,74,.12);color:var(--green)}.badge-rust{background:rgba(184,74,42,.12);color:var(--rust)}
+.impact-bar{background:rgba(42,122,74,.08);border:1px solid rgba(42,122,74,.2);border-radius:var(--r);padding:28px 36px;display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.impact-val{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--green)}.impact-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.map-preview{background:var(--ink);border-radius:var(--r);height:320px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.map-dot{position:absolute;width:12px;height:12px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 4px rgba(201,168,76,.3);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(201,168,76,.3)}50%{box-shadow:0 0 0 10px rgba(201,168,76,.1)}}
+.step{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid var(--border)}.step:last-child{border-bottom:none}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(201,168,76,.2);line-height:1;flex-shrink:0;width:60px}
+.step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}.step-desc{font-size:12px;color:var(--muted);line-height:1.8}
+.testi{border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:28px;background:rgba(255,255,255,.03)}
+.testi-quote{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:1.6;margin-bottom:18px;color:rgba(245,240,232,.85)}
+.testi-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--cream)}.testi-role{font-size:10px;color:rgba(245,240,232,.4);margin-top:2px}
+.calc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:32px}
+.calc-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:20px}
+input[type=range]{width:100%;accent-color:var(--gold);margin:8px 0}
+.calc-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5);margin-bottom:4px}
+.calc-result{background:rgba(42,122,74,.15);border:1px solid rgba(42,122,74,.3);border-radius:6px;padding:16px;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.cr-val{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--green)}.cr-label{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em}
+.modal-ov{position:fixed;inset:0;background:rgba(13,13,13,.8);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}.modal-ov.open{opacity:1;pointer-events:all}
+.modal{background:var(--cream);border-radius:10px;width:520px;max-width:96vw;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(16px);transition:transform .25s}.modal-ov.open .modal{transform:none}
+.modal-hd{padding:28px 28px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--cream);z-index:2}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600}.modal-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.modal-close{position:absolute;top:18px;right:20px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted)}
+.modal-body{padding:24px 28px 32px}
+.form-group{margin-bottom:18px}.form-label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-input,.form-select{width:100%;border:1px solid var(--border);background:#fff;padding:12px 14px;font-family:'DM Mono',monospace;font-size:13px;border-radius:3px;outline:none;color:var(--ink);transition:border-color .2s;appearance:none}
+.form-input:focus,.form-select:focus{border-color:var(--gold)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.tab-btn{flex:1;background:none;border:none;padding:12px;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}.tab-btn.active{color:var(--ink);border-bottom-color:var(--gold)}
+.toasts{position:fixed;top:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:10px}
+.toast{background:var(--ink);color:var(--cream);padding:12px 18px;border-radius:4px;font-size:12px;border-left:3px solid var(--gold);animation:slideIn .3s;max-width:320px}
+.toast.success{border-left-color:var(--green)}.toast.error{border-left-color:var(--rust)}
+.pwa-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:14px 24px;border-radius:var(--r);display:none;align-items:center;gap:16px;font-size:12px;z-index:150;box-shadow:0 8px 32px rgba(0,0,0,.3)}.pwa-banner.show{display:flex}
+footer{background:var(--ink);color:rgba(245,240,232,.45);padding:60px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px}
+.footer-brand{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:12px}.footer-brand span{color:var(--gold)}
+.footer-desc{font-size:11px;line-height:1.9;max-width:260px}.footer-heading{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:18px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}.footer-links a{color:rgba(245,240,232,.4);text-decoration:none;font-size:11px;transition:color .2s}.footer-links a:hover{color:var(--gold)}
+.footer-bot{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:18px 60px;display:flex;justify-content:space-between;font-size:10px;color:rgba(245,240,232,.25)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}
+.spinner{width:18px;height:18px;border:2px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{grid-template-columns:1fr}.hero-r{display:none}.hero-l{padding:60px 24px}.sec{padding:70px 24px}.g3,.g4{grid-template-columns:1fr}.g2{grid-template-columns:1fr}footer{grid-template-columns:1fr 1fr;padding:40px 24px;gap:30px}.footer-bot{padding:16px 24px;flex-direction:column;gap:6px}}
+</style>
+</head>
+<body>
+<div class="toasts" id="toasts"></div>
+<div class="pwa-banner" id="pwa-banner">📱 Add EquityBridge to your home screen<button class="btn btn-gold" style="padding:8px 16px;font-size:10px;margin-left:8px" id="pwa-install">Install</button><button onclick="document.getElementById('pwa-banner').classList.remove('show')" style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:18px;margin-left:8px">✕</button></div>
+<nav><a class="nav-logo" href="#">Equity<span>Bridge</span></a><ul class="nav-links"><li><a href="#listings">Browse Deals</a></li><li><a href="#features">Features</a></li><li><a href="#how">How It Works</a></li><li><a href="#" onclick="openModal('invest')" class="nav-cta">Get Started</a></li></ul></nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <span class="hero-tag">Democratizing Local Investment</span>
+    <h1>Own a piece of<br><em>your community</em><br>from $10.</h1>
+    <p class="hero-sub">Invest in the restaurant on your street, the café you love, the boutique that defines your neighborhood. Earn returns while keeping money local.</p>
+    <div class="hero-btns"><a href="#listings" class="btn btn-gold">Browse Local Deals</a><a href="#" onclick="openModal('owner')" class="btn btn-outline">List Your Business</a></div>
+    <div class="hero-stats">
+      <div><div class="stat-v" id="stat-capital">$4.2M</div><div class="stat-l">Deployed</div></div>
+      <div><div class="stat-v" id="stat-jobs">847</div><div class="stat-l">Jobs Created</div></div>
+      <div><div class="stat-v" id="stat-investors">2,400+</div><div class="stat-l">Investors</div></div>
+      <div><div class="stat-v" id="stat-cities">38</div><div class="stat-l">Cities</div></div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div style="width:320px">
+      <div class="feat-card" style="margin-bottom:14px">
+        <div style="position:absolute" class="badge badge-rust" style="top:16px;right:16px">Hot 🔥</div>
+        <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">🍝 Restaurant · Chicago</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:14px">Napoli Kitchen</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+          <div><div class="lv">$120K</div><div class="ll">Seeking</div></div>
+          <div><div class="lv">25%</div><div class="ll">Equity</div></div>
+          <div><div class="lv">$10</div><div class="ll">Min.</div></div>
+        </div>
+        <div class="progress"><div class="progress-fill" style="width:82%"></div></div>
+        <div class="listing-footer" style="margin-top:6px"><span>$98,400 · 82%</span><span>14 days left</span></div>
+        <button class="btn btn-ink" style="width:100%;margin-top:12px;padding:10px" onclick="openModal('invest')">Invest $10+ →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="feat-card" style="padding:16px;text-align:center"><div style="font-size:20px;margin-bottom:6px">🤖</div><div style="font-size:11px;font-weight:600">Auto-Invest</div><div style="font-size:10px;color:var(--muted)">Set & forget</div></div>
+        <div class="feat-card" style="padding:16px;text-align:center"><div style="font-size:20px;margin-bottom:6px">🔄</div><div style="font-size:11px;font-weight:600">Secondary Market</div><div style="font-size:10px;color:var(--muted)">Resell your stake</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section style="padding:0 60px" class="dark">
+  <div class="impact-bar reveal">
+    <div><div class="impact-val" id="imp-jobs">847</div><div class="impact-label">Jobs Created</div></div>
+    <div><div class="impact-val" id="imp-capital">$4.2M</div><div class="impact-label">Capital Deployed</div></div>
+    <div><div class="impact-val" id="imp-biz">138</div><div class="impact-label">Businesses Funded</div></div>
+    <div><div class="impact-val" id="imp-cities">38</div><div class="impact-label">Cities Reached</div></div>
+    <div><div class="impact-val" id="imp-inv">2,400</div><div class="impact-label">Everyday Investors</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec dark" id="features">
+  <div class="reveal"><div class="sec-tag">Everything You Need</div><h2>Built for everyone,<br>not just the wealthy.</h2><p class="sec-sub">Every feature is designed to make investing in your community as simple as ordering food online.</p></div>
+  <div class="g4 reveal">
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(201,168,76,.1)">💵</div><div class="feat-title">Start from $10</div><div class="feat-desc">No wealth requirement. Anyone with $10 can own a stake in a real local business.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,122,74,.1)">📍</div><div class="feat-title">Invest Nearby</div><div class="feat-desc">Map-based discovery. Find businesses seeking investment within miles of your home.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,90,138,.1)">🤖</div><div class="feat-title">Auto-Invest</div><div class="feat-desc">Set rules and let the platform invest automatically each month in your preferred categories.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(184,74,42,.1)">🔄</div><div class="feat-title">Secondary Market</div><div class="feat-desc">Need liquidity? List your equity stake for other investors to purchase at any time.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(201,168,76,.1)">📊</div><div class="feat-title">Live Business Updates</div><div class="feat-desc">Owners post regular updates. You always know exactly how your investment performs.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,122,74,.1)">🧮</div><div class="feat-title">ROI Calculator</div><div class="feat-desc">Model different growth scenarios and see projected returns before committing any money.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,90,138,.1)">🏅</div><div class="feat-title">Earn $25/Referral</div><div class="feat-desc">Share your unique link. Earn $25 every time someone you refer makes their first investment.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(184,74,42,.1)">📱</div><div class="feat-title">Works as Phone App</div><div class="feat-desc">Add to home screen from your browser. No app store needed. Works offline too.</div></div>
+  </div>
+  <div class="g3 reveal" style="margin-top:20px">
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,122,74,.1)">🤝</div><div class="feat-title">Direct Q&A with Owners</div><div class="feat-desc">Ask the business owner questions publicly before you invest. See all past answers from other investors.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(201,168,76,.1)">⭐</div><div class="feat-title">Verified Investor Reviews</div><div class="feat-desc">Leave reviews as a customer or investor. Verified investor reviews are highlighted and trusted.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,90,138,.1)">🔔</div><div class="feat-title">Smart Notifications</div><div class="feat-desc">Get alerted when new businesses list near you, when campaigns close, and when distributions are paid.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(184,74,42,.1)">📋</div><div class="feat-title">Watchlist</div><div class="feat-desc">Save businesses you are interested in. Get notified when they launch an offering or hit funding milestones.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(42,122,74,.1)">🌱</div><div class="feat-title">Impact Tracking</div><div class="feat-desc">See exactly how many jobs your investments helped create and how much capital stayed in your community.</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(201,168,76,.1)">🏦</div><div class="feat-title">Secure Escrow</div><div class="feat-desc">All funds held in escrow until campaigns hit their target. Full refund guaranteed if a campaign fails.</div></div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section class="sec" id="listings">
+  <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:20px">
+    <div><div class="sec-tag">Live Opportunities</div><h2 style="margin-bottom:0">Invest in real<br>businesses today</h2></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="filterListings('all',this)" style="padding:8px 16px;font-size:10px">All</button>
+      <button class="btn btn-outline" onclick="filterListings('restaurant',this)" style="padding:8px 16px;font-size:10px">Restaurants</button>
+      <button class="btn btn-outline" onclick="filterListings('cafe',this)" style="padding:8px 16px;font-size:10px">Cafés</button>
+      <button class="btn btn-outline" onclick="filterListings('retail',this)" style="padding:8px 16px;font-size:10px">Retail</button>
+      <button class="btn btn-gold" onclick="useMyLocation()" style="padding:8px 16px;font-size:10px">📍 Near Me</button>
+    </div>
+  </div>
+  <div class="g3 reveal" id="listings-grid">
+    <div class="listing-card" data-cat="restaurant"><div class="listing-thumb" style="background:linear-gradient(135deg,#e8c49a,#c97b3b)">🍝</div><div class="listing-body"><div class="listing-cat">Restaurant · Chicago, IL</div><div class="listing-name">Napoli Kitchen</div><div class="listing-loc">📍 0.3 mi · ⭐ 4.8 (124)</div><div class="listing-row"><div><div class="lv">$120K</div><div class="ll">Seeking</div></div><div><div class="lv">25%</div><div class="ll">Equity</div></div><div><div class="lv">$10</div><div class="ll">Min.</div></div></div><div class="progress"><div class="progress-fill" style="width:82%"></div></div><div class="listing-footer"><span>82% funded</span><span>14 days left</span></div><button class="btn btn-ink" style="width:100%;margin-top:12px;padding:10px;font-size:11px" onclick="openModal('invest')">Invest Now →</button></div></div>
+    <div class="listing-card" data-cat="cafe"><div class="listing-thumb" style="background:linear-gradient(135deg,#d4b896,#7a4f2a)">☕</div><div class="listing-body"><div class="listing-cat">Café · Brooklyn, NY</div><div class="listing-name">The Daily Grind</div><div class="listing-loc">📍 1.1 mi · ⭐ 4.6 (89)</div><div class="listing-row"><div><div class="lv">$80K</div><div class="ll">Seeking</div></div><div><div class="lv">20%</div><div class="ll">Equity</div></div><div><div class="lv">$10</div><div class="ll">Min.</div></div></div><div class="progress"><div class="progress-fill" style="width:68%"></div></div><div class="listing-footer"><span>68% funded</span><span>21 days left</span></div><button class="btn btn-ink" style="width:100%;margin-top:12px;padding:10px;font-size:11px" onclick="openModal('invest')">Invest Now →</button></div></div>
+    <div class="listing-card" data-cat="retail"><div class="listing-thumb" style="background:linear-gradient(135deg,#b8d0c8,#4a8a72)">👗</div><div class="listing-body"><div class="listing-cat">Boutique · Austin, TX</div><div class="listing-name">Loom & Thread</div><div class="listing-loc">📍 2.4 mi · ⭐ 4.9 (67)</div><div class="listing-row"><div><div class="lv">$60K</div><div class="ll">Seeking</div></div><div><div class="lv">15%</div><div class="ll">Equity</div></div><div><div class="lv">$10</div><div class="ll">Min.</div></div></div><div class="progress"><div class="progress-fill" style="width:34%"></div></div><div class="listing-footer"><span>34% funded</span><span>42 days left</span></div><button class="btn btn-ink" style="width:100%;margin-top:12px;padding:10px;font-size:11px" onclick="openModal('invest')">Invest Now →</button></div></div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="sec dark">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center" class="reveal">
+    <div><div class="sec-tag">ROI Calculator</div><h2>See your returns<br>before you invest.</h2><p class="sec-sub">Slide to model different growth scenarios. Fully transparent — we show realistic and worst-case projections.</p></div>
+    <div class="calc">
+      <div class="calc-title">Investment Calculator</div>
+      <div style="margin-bottom:16px"><div class="calc-row"><span>Investment Amount</span><span style="color:#fff;font-weight:600" id="cv-amt">$500</span></div><input type="range" id="c-amt" min="10" max="10000" step="10" value="500" oninput="updateCalc()"/></div>
+      <div style="margin-bottom:16px"><div class="calc-row"><span>Annual Growth Rate</span><span style="color:#fff;font-weight:600" id="cv-gr">15%</span></div><input type="range" id="c-gr" min="5" max="50" step="1" value="15" oninput="updateCalc()"/></div>
+      <div style="margin-bottom:16px"><div class="calc-row"><span>Your Equity Stake</span><span style="color:#fff;font-weight:600" id="cv-eq">2%</span></div><input type="range" id="c-eq" min="0.1" max="10" step="0.1" value="2" oninput="updateCalc()"/></div>
+      <div class="calc-result"><div><div class="cr-val" id="c-3y">$0</div><div class="cr-label">3-Year Value</div></div><div><div class="cr-val" id="c-5y">$0</div><div class="cr-label">5-Year Value</div></div><div style="grid-column:1/-1"><div class="cr-val" id="c-ret">0%</div><div class="cr-label">5-Year Return</div></div></div>
+      <p style="font-size:9px;color:rgba(255,255,255,.3);margin-top:12px;line-height:1.6">Projections only. Investments carry risk. Past performance does not predict future results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="sec">
+  <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div><div class="sec-tag">Invest Near You</div><h2>Your neighborhood<br>is the portfolio.</h2><p class="sec-sub">Turn on location and see every business seeking investment within miles of where you stand right now.</p><button class="btn btn-gold" onclick="useMyLocation()" style="margin-top:8px">📍 Find Businesses Near Me</button></div>
+    <div class="map-preview"><div style="color:rgba(255,255,255,.2);font-family:'Cormorant Garamond',serif;font-size:22px;z-index:1">Your City</div><div class="map-dot" style="top:35%;left:45%"></div><div class="map-dot" style="top:55%;left:60%;animation-delay:.5s"></div><div class="map-dot" style="top:42%;left:30%;animation-delay:1s"></div><div class="map-dot" style="top:65%;left:40%;animation-delay:1.5s"></div><div class="map-dot" style="top:28%;left:62%;animation-delay:.8s"></div></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec dark" id="how">
+  <div class="reveal"><div class="sec-tag">Process</div><h2>Three steps to<br>owning local equity.</h2></div>
+  <div class="g2 reveal" style="gap:60px">
+    <div>
+      <div class="step"><div class="step-num">01</div><div><div class="step-title" style="color:#fff">Find a business you believe in</div><div class="step-desc">Browse by category, area, or let auto-invest pick matching businesses based on your rules.</div></div></div>
+      <div class="step"><div class="step-num">02</div><div><div class="step-title" style="color:#fff">Invest from $10 — no minimum wealth</div><div class="step-desc">Quick KYC check. Invest any amount from $10. Funds go into escrow until the campaign closes successfully.</div></div></div>
+      <div class="step"><div class="step-num">03</div><div><div class="step-title" style="color:#fff">Earn returns & track your impact</div><div class="step-desc">Receive quarterly profit distributions. See how many jobs your investments helped create in your community.</div></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="testi"><div class="testi-quote">"I put $50 into a taco place near my office. Now I get quarterly checks AND feel proud every time I walk past."</div><div class="testi-name">Maria T.</div><div class="testi-role">Investor · $50 first investment</div></div>
+      <div class="testi"><div class="testi-quote">"We raised $120K from 340 neighbors. They are not just investors — they are our biggest fans."</div><div class="testi-name">James R.</div><div class="testi-role">Owner · Napoli Kitchen</div></div>
+      <div class="testi"><div class="testi-quote">"Auto-invest puts $100/month into local cafés automatically. I never even think about it."</div><div class="testi-name">Alex M.</div><div class="testi-role">Investor · 7 businesses</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec" style="text-align:center">
+  <div class="reveal"><div class="sec-tag" style="justify-content:center">Ready?</div><h2>Your community needs<br><em style="color:var(--gold)">you</em> to invest in it.</h2><p style="color:var(--muted);max-width:480px;margin:0 auto 40px;line-height:1.9">Every $10 invested keeps money in your neighborhood, creates jobs, and builds real wealth for everyday people.</p><div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap"><a href="#" onclick="openModal('invest')" class="btn btn-gold">Start Investing — $10 Min.</a><a href="#" onclick="openModal('owner')" class="btn btn-outline">List Your Business</a></div></div>
+</section>
+
+<footer>
+  <div><div class="footer-brand">Equity<span>Bridge</span></div><div class="footer-desc">Democratizing business ownership. Every citizen deserves to invest in businesses that make their community great.</div></div>
+  <div><div class="footer-heading">Investors</div><ul class="footer-links"><li><a href="#listings">Browse Deals</a></li><li><a href="#" onclick="openModal('invest')">Get Started</a></li><li><a href="#">How Returns Work</a></li><li><a href="#">FAQ</a></li></ul></div>
+  <div><div class="footer-heading">Businesses</div><ul class="footer-links"><li><a href="#" onclick="openModal('owner')">List Your Business</a></li><li><a href="#">How It Works</a></li><li><a href="#">Success Stories</a></li></ul></div>
+  <div><div class="footer-heading">Legal</div><ul class="footer-links"><li><a href="#">Terms of Service</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Reg CF Disclosures</a></li><li><a href="#">Risk Factors</a></li></ul></div>
+</footer>
+<div class="footer-bot"><span>© 2025 EquityBridge Inc. Securities offered under Regulation Crowdfunding.</span><span>Not financial advice. Investments carry risk of total loss.</span></div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal" onclick="closeModalOut(event)">
+  <div class="modal">
+    <div class="modal-hd"><div class="modal-title">Get Started</div><div class="modal-sub">Join 2,400+ community investors</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="tabs"><button class="tab-btn active" onclick="switchTab('login',this)">Sign In</button><button class="tab-btn" onclick="switchTab('register',this)">Create Account</button></div>
+      <div id="tab-login">
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="login-email" type="email" placeholder="you@example.com"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-password" type="password" placeholder="••••••••"/></div>
+        <button class="btn btn-gold" style="width:100%" onclick="login()" id="login-btn">Sign In</button>
+        <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--muted)"><a onclick="forgotPw()" style="color:var(--gold);cursor:pointer">Forgot password?</a></div>
+      </div>
+      <div id="tab-register" style="display:none">
+        <div class="form-group"><label class="form-label">I am a</label><select class="form-select" id="reg-role"><option value="investor">Investor — I want to invest in businesses</option><option value="owner">Business Owner — I want to raise capital</option></select></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="reg-first" type="text" placeholder="Jane"/></div><div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="reg-last" type="text" placeholder="Smith"/></div></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="you@example.com"/></div>
+        <div class="form-group"><label class="form-label">Password (min 8 chars)</label><input class="form-input" id="reg-password" type="password" placeholder="••••••••"/></div>
+        <div class="form-group" id="ref-field" style="display:none"><label class="form-label">Referral Code (optional)</label><input class="form-input" id="reg-ref" type="text" placeholder="FRIEND25"/></div>
+        <button class="btn btn-gold" style="width:100%" onclick="register()" id="register-btn">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_BASE='/api';let token=localStorage.getItem('eb_token');
+async function loadImpact(){try{const r=await fetch(`${API_BASE}/features/platform-impact`);const d=await r.json();if(d.impact){animCount('stat-jobs',parseInt(d.impact.total_jobs_created||847));animCount('stat-investors',parseInt(d.impact.total_investors||2400));animCount('stat-cities',parseInt(d.impact.cities_reached||38));animCount('imp-jobs',parseInt(d.impact.total_jobs_created||847));animCount('imp-biz',parseInt(d.impact.businesses_impacted||138));animCount('imp-inv',parseInt(d.impact.total_investors||2400));animCount('imp-cities',parseInt(d.impact.cities_reached||38))}}catch(_){}}
+function animCount(id,target,money=false){const el=document.getElementById(id);if(!el)return;let cur=0;const step=target/60;const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t);}el.textContent=money?'$'+(cur/1e6).toFixed(1)+'M':Math.round(cur).toLocaleString()+(target>999?'+':'');},25);}
+function updateCalc(){const a=parseInt(document.getElementById('c-amt').value);const g=parseInt(document.getElementById('c-gr').value)/100;const e=parseFloat(document.getElementById('c-eq').value)/100;document.getElementById('cv-amt').textContent='$'+a.toLocaleString();document.getElementById('cv-gr').textContent=Math.round(g*100)+'%';document.getElementById('cv-eq').textContent=(e*100).toFixed(1)+'%';const bv=a/e;const v3=bv*Math.pow(1+g,3)*e;const v5=bv*Math.pow(1+g,5)*e;const ret=((v5-a)/a*100).toFixed(0);document.getElementById('c-3y').textContent='$'+Math.round(v3).toLocaleString();document.getElementById('c-5y').textContent='$'+Math.round(v5).toLocaleString();document.getElementById('c-ret').textContent=(ret>0?'+':'')+ret+'%';document.getElementById('c-ret').style.color=ret>=0?'var(--green)':'var(--rust)';}
+updateCalc();
+function useMyLocation(){if(!navigator.geolocation)return toast('Location not supported.','error');toast('Finding businesses near you...','');navigator.geolocation.getCurrentPosition(async pos=>{try{const r=await fetch(`${API_BASE}/features/nearby?lat=${pos.coords.latitude}&lng=${pos.coords.longitude}&radius_km=10`);const d=await r.json();if(d.businesses?.length){toast(`Found ${d.businesses.length} businesses near you!`,'success');document.getElementById('listings').scrollIntoView({behavior:'smooth'});}else toast('No businesses found within 10km.','');}catch(e){toast('Could not load nearby businesses.','error');}},()=>toast('Location denied. Try browsing all.','error'));}
+function filterListings(cat,btn){document.querySelectorAll('#listings .btn').forEach(b=>{b.classList.remove('btn-gold');b.classList.add('btn-outline');});btn.classList.add('btn-gold');btn.classList.remove('btn-outline');document.querySelectorAll('.listing-card[data-cat]').forEach(c=>{c.style.display=cat==='all'||c.dataset.cat===cat?'':' none';});}
+async function login(){const email=document.getElementById('login-email').value.trim();const password=document.getElementById('login-password').value;if(!email||!password)return toast('Enter email and password.','error');const btn=document.getElementById('login-btn');btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;try{const r=await fetch(`${API_BASE}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok)throw new Error(d.error);localStorage.setItem('eb_token',d.access_token||d.accessToken);toast('Welcome back!','success');setTimeout(()=>window.location.href='/dashboard',1000);}catch(e){toast(e.message,'error');btn.innerHTML='Sign In';btn.disabled=false;}}
+async function register(){const role=document.getElementById('reg-role').value;const firstName=document.getElementById('reg-first').value.trim();const lastName=document.getElementById('reg-last').value.trim();const email=document.getElementById('reg-email').value.trim();const password=document.getElementById('reg-password').value;if(!firstName||!email||!password)return toast('All fields required.','error');const btn=document.getElementById('register-btn');btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;try{const r=await fetch(`${API_BASE}/auth/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,firstName,lastName,role})});const d=await r.json();if(!r.ok)throw new Error(d.error);localStorage.setItem('eb_token',d.access_token||d.accessToken);toast('Account created!','success');setTimeout(()=>window.location.href='/dashboard',1200);}catch(e){toast(e.message,'error');btn.innerHTML='Create Account';btn.disabled=false;}}
+function forgotPw(){const email=document.getElementById('login-email').value.trim();if(!email)return toast('Enter your email first.','error');fetch(`${API_BASE}/auth/forgot-password`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});toast('Reset link sent if email exists.','success');}
+function openModal(tab){document.getElementById('modal').classList.add('open');if(tab==='owner'){switchTab('register',document.querySelectorAll('.tab-btn')[1]);document.getElementById('reg-role').value='owner';}else switchTab('login',document.querySelectorAll('.tab-btn')[0]);}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+function closeModalOut(e){if(e.target.id==='modal')closeModal();}
+function switchTab(tab,btn){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-login').style.display=tab==='login'?'':'none';document.getElementById('tab-register').style.display=tab==='register'?'':'none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function toast(msg,type=''){const el=document.createElement('div');el.className='toast '+type;el.textContent=msg;document.getElementById('toasts').appendChild(el);setTimeout(()=>el.remove(),4500);}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('pwa-banner').classList.add('show');});document.getElementById('pwa-install').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('pwa-banner').classList.remove('show');});
+const urlRef=new URLSearchParams(window.location.search).get('ref');if(urlRef){document.getElementById('ref-field').style.display='';document.getElementById('reg-ref').value=urlRef;}
+if(token){fetch(`${API_BASE}/auth/me`,{headers:{Authorization:`Bearer ${token}`}}).then(r=>r.ok?window.location.href='/dashboard':localStorage.removeItem('eb_token')).catch(()=>{});}
+loadImpact();
+</script>
+</body>
+</html>

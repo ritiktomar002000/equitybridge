@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EquityBridge — Investor Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d0d0d;
+      --cream: #f5f0e8;
+      --gold: #c9a84c;
+      --gold-light: #e8d08a;
+      --rust: #b84a2a;
+      --muted: #7a7168;
+      --card-bg: #faf7f2;
+      --border: rgba(201,168,76,0.25);
+      --shadow: 0 4px 40px rgba(13,13,13,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    nav {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--ink) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 80px);
+    }
+
+    .sidebar {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 40px 30px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 40px;
+    }
+
+    .sidebar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin-bottom: 12px;
+    }
+
+    .sidebar-nav a {
+      color: rgba(245,240,232,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      color: var(--gold);
+    }
+
+    .main-content {
+      padding: 60px;
+    }
+
+    .dashboard-header {
+      margin-bottom: 40px;
+    }
+
+    .dashboard-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .dashboard-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: rgba(201,168,76,0.08);
+      padding: 16px 24px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    td {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .business-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .business-cat {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .status-badge.escrow { background: rgba(201,168,76,0.15); color: var(--gold); }
+    .status-badge.completed { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .status-badge.pending { background: rgba(156,163,175,0.15); color: #6b7280; }
+    .status-badge.failed { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+    .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .kyc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .kyc-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .kyc-status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .kyc-status-dot.approved { background: #22c55e; }
+    .kyc-status-dot.pending { background: var(--gold); }
+    .kyc-status-dot.rejected { background: var(--rust); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      padding: 12px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 40px;
+      width: 500px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.open .modal { transform: none; }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 12px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      border-radius: 2px;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .main-content { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="equitybridge.html">Equity<span>Bridge</span></a>
+  <ul class="nav-links">
+    <li><a href="equitybridge.html#listings">Browse</a></li>
+    <li><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Menu</div>
+      <ul class="sidebar-nav">
+        <li><a href="#" class="active">📊 Overview</a></li>
+        <li><a href="equitybridge.html#listings">🔍 Browse Businesses</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Investor Dashboard</h1>
+      <p class="dashboard-subtitle">Track your investments and portfolio performance</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Invested</div>
+        <div class="stat-value" id="totalInvested">$0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Investments</div>
+        <div class="stat-value" id="activeInvestments">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending Investments</div>
+        <div class="stat-value" id="pendingInvestments">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Remaining Limit</div>
+        <div class="stat-value" id="remainingLimit">$0</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">My Investments</h2>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Business</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Equity</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="investmentsTable">
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--muted);">Loading investments...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-header" style="margin-top: 40px;">
+      <h2 class="section-title">KYC Status</h2>
+    </div>
+
+    <div class="kyc-card" id="kycCard">
+      <div class="kyc-status">
+        <div class="kyc-status-dot pending" id="kycDot"></div>
+        <span class="kyc-status-text" id="kycStatusText">Loading...</span>
+      </div>
+      <p style="color: var(--muted); font-size: 12px; margin-bottom: 20px;" id="kycMessage">
+        Complete KYC verification to start investing.
+      </p>
+      <button class="btn-primary" id="kycButton" onclick="openKycModal()">Complete KYC</button>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="kycModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeKycModal()">&times;</button>
+    <h2 class="modal-title">Complete KYC</h2>
+    <p style="color: var(--muted); font-size: 12px; margin-bottom: 24px;">
+      Verify your identity to comply with Regulation CF requirements.
+    </p>
+    <form id="kycForm" onsubmit="submitKyc(event)">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-input" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-input" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Date of Birth</label>
+        <input type="date" class="form-input" name="dateOfBirth" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">SSN Last 4 Digits</label>
+        <input type="text" class="form-input" name="ssnLast4" pattern="\d{4}" maxlength="4" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Street Address</label>
+        <input type="text" class="form-input" name="street" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input type="text" class="form-input" name="city" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">State</label>
+        <input type="text" class="form-input" name="state" maxlength="2" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ZIP Code</label>
+        <input type="text" class="form-input" name="zipCode" pattern="\d{5}" maxlength="5" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Annual Income</label>
+        <input type="number" class="form-input" name="annualIncome" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Net Worth</label>
+        <input type="number" class="form-input" name="netWorth" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Accreditation Status</label>
+        <select class="form-input" name="accreditationStatus" required>
+          <option value="non_accredited">Non-Accredited</option>
+          <option value="accredited">Accredited Investor</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%;">Submit KYC</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const API_BASE = 'http://localhost:3002/api';
+let token = localStorage.getItem('token');
+
+if (!token) {
+  window.location.href = 'equitybridge.html';
+}
+
+async function fetchWithAuth(url, options = {}) {
+  options.headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  };
+  const response = await fetch(url, options);
+  if (response.status === 401) {
+    localStorage.removeItem('token');
+    window.location.href = 'equitybridge.html';
+  }
+  return response;
+}
+
+async function loadDashboard() {
+  try {
+    const response = await fetchWithAuth(`${API_BASE}/users/dashboard`);
+    const data = await response.json();
+    
+    if (data.dashboardData) {
+      const d = data.dashboardData;
+      document.getElementById('totalInvested').textContent = `$${d.totalInvested.toLocaleString()}`;
+      document.getElementById('activeInvestments').textContent = d.activeInvestments;
+      document.getElementById('pendingInvestments').textContent = d.pendingInvestments;
+      document.getElementById('remainingLimit').textContent = `$${d.investmentLimit?.remainingAmount?.toLocaleString() || 0}`;
+      
+      renderInvestments(d.investments);
+    }
+  } catch (error) {
+    console.error('Error loading dashboard:', error);
+  }
+}
+
+function renderInvestments(investments) {
+  const tbody = document.getElementById('investmentsTable');
+  
+  if (!investments || investments.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--muted);">No investments yet</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = investments.map(inv => `
+    <tr>
+      <td>
+        <div class="business-name">${inv.businesses?.name || 'Unknown'}</div>
+      </td>
+      <td><span class="business-cat">${inv.businesses?.category || 'N/A'}</span></td>
+      <td><span class="amount">$${parseFloat(inv.amount).toLocaleString()}</span></td>
+      <td>${inv.equity_percentage?.toFixed(2)}%</td>
+      <td><span class="status-badge ${inv.status}">${inv.status}</span></td>
+    </tr>
+  `).join('');
+}
+
+async function loadKycStatus() {
+  try {
+    const response = await fetchWithAuth(`${API_BASE}/compliance/kyc/status`);
+    const data = await response.json();
+    
+    const dot = document.getElementById('kycDot');
+    const text = document.getElementById('kycStatusText');
+    const message = document.getElementById('kycMessage');
+    const button = document.getElementById('kycButton');
+    
+    dot.className = `kyc-status-dot ${data.kycStatus}`;
+    
+    if (data.kycStatus === 'approved') {
+      text.textContent = 'Verified';
+      message.textContent = 'Your identity has been verified. You can now invest.';
+      button.style.display = 'none';
+    } else if (data.kycStatus === 'submitted') {
+      text.textContent = 'Under Review';
+      message.textContent = 'Your KYC is being reviewed. This typically takes 1-2 business days.';
+      button.style.display = 'none';
+    } else if (data.kycStatus === 'rejected') {
+      text.textContent = 'Rejected';
+      message.textContent = 'Your KYC was rejected. Please contact support.';
+      button.textContent = 'Resubmit KYC';
+    } else {
+      text.textContent = 'Not Verified';
+      message.textContent = 'Complete KYC verification to start investing.';
+      button.style.display = 'inline-block';
+    }
+  } catch (error) {
+    console.error('Error loading KYC status:', error);
+  }
+}
+
+function openKycModal() {
+  document.getElementById('kycModal').classList.add('open');
+}
+
+function closeKycModal() {
+  document.getElementById('kycModal').classList.remove('open');
+}
+
+async function submitKyc(event) {
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  
+  const data = {
+    firstName: formData.get('firstName'),
+    lastName: formData.get('lastName'),
+    dateOfBirth: formData.get('dateOfBirth'),
+    ssnLast4: formData.get('ssnLast4'),
+    address: {
+      street: formData.get('street'),
+      city: formData.get('city'),
+      state: formData.get('state'),
+      zipCode: formData.get('zipCode')
+    },
+    annualIncome: parseFloat(formData.get('annualIncome')),
+    netWorth: parseFloat(formData.get('netWorth')),
+    accreditationStatus: formData.get('accreditationStatus')
+  };
+  
+  try {
+    const response = await fetchWithAuth(`${API_BASE}/compliance/kyc`, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    
+    if (response.ok) {
+      closeKycModal();
+      loadKycStatus();
+      alert('KYC submitted successfully!');
+    } else {
+      const error = await response.json();
+      alert(error.error?.message || 'Submission failed');
+    }
+  } catch (error) {
+    console.error('Error submitting KYC:', error);
+    alert('Submission failed. Please try again.');
+  }
+}
+
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = 'equitybridge.html';
+}
+
+loadDashboard();
+loadKycStatus();
+</script>
+
+</body>
+</html>
